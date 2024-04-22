@@ -91,6 +91,7 @@ const fileupload = async(req, res) => {
     res.send({ message: "an error occured ", status: false, myImagelink })
    }
    return res.send({ message: "image upload sucessful ", status: true, myImagelink })
+   console.log(myImagelink);
     // cloudinary.uploader.upload(myfile, (err, result) => {
     //   if (err) {
     //     console.log(err);
