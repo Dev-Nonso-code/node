@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {landingpage,registerUser,signin,geTdashboard, fileupload, uploadchat} = require("../controllers/usersController")
-const { registerUserValidationSchema, signinValidationSchema } = require("../middleware/usersValidatr")
+const { registerUserValidationSchema, signinValidationSchema, uploadchatValidationSchema, fileuploadValidationSchema } = require("../middleware/usersValidatr")
 const { validate } = require("../middleware/validae")
 
 router.get("/",landingpage)

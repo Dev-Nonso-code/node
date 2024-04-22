@@ -1,4 +1,5 @@
 const yup = require("yup");
+const { uploadchat, fileupload } = require("../controllers/usersController");
 
 const registerUserValidationSchema = yup.object().shape({
     firstName: yup

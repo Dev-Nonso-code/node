@@ -80,19 +80,30 @@ const registerUser = async (req, res, next) => {
 //   })
 // }
 
-const fileupload = (req, res) => {
-  let myfile = req.body.myfile;
-  cloudinary.uploader.upload(myfile, (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      const myImagelink = result.secure_url
-      res.send.body({
-        message: "Image upload successful",
-        status: true, myImagelink
-      })
-    }
-  })
+const fileupload = async(req, res) => {
+  let myfile = req.body.myfile
+  console.log(myfile);
+  try {
+   const result = await cloudinary.uploader.upload(myfile)
+   console.log(result);
+   const myImagelink = result.secure_url
+   if(!result){
+    res.send({ message: "an error occured ", status: false, myImagelink })
+   }
+   return res.send({ message: "image upload sucessful ", status: true, myImagelink })
+    // cloudinary.uploader.upload(myfile, (err, result) => {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     const myImagelink = result.secure_url
+    //     res.send({
+    //       message: "Image upload successful",
+    //       status: true, myImagelink
+    //     })
+    //   }
+  }catch(error){
+    console.log(error)
+  }
   // { public_id: "olympic_flag" },
   // function (error, result) { console.log(result); });
 }
