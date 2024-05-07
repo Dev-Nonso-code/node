@@ -16,6 +16,10 @@ cloudinary.config({
   api_secret: process.env.API_SECRET
 });
 
+const registerUsers =(req, res)=>{
+  res.render("signup")
+}
+
 const landingpage = (req, res) => {
   res.send([
     { name: "devnonso", age: 22 },
@@ -82,6 +86,7 @@ const registerUser = async (req, res, next) => {
 
 const fileupload = async(req, res) => {
   let myfile = req.body.myfile
+  const email = req.body
   console.log(myfile);
   try {
    const result = await cloudinary.uploader.upload(myfile)
@@ -92,6 +97,18 @@ const fileupload = async(req, res) => {
    }
    return res.send({ message: "image upload sucessful ", status: true, myImagelink })
    console.log(myImagelink);
+
+   const profileimage = await usersModel.findOneAndUpdate(
+    {email: email},
+    {$set:{profile: myimage}},
+    {new: true}
+  )
+  if (!profileimage) {
+    res.status(405).send({message:"unable to update profile", status: false})
+  }
+
+  return res.status(200).send({message:"upload successful", status:true, myimage})
+
     // cloudinary.uploader.upload(myfile, (err, result) => {
     //   if (err) {
     //     console.log(err);
@@ -123,7 +140,7 @@ const signin = async (req, res, next) => {
           console.log(result2)
           console.log(password);
           if (result2) {
-            const token = jsonWebToken.sign({ email }, "secretkey", { expiresIn: 30 })
+            const token = jsonWebToken.sign({ email }, "secretkey", { expiresIn: 90 })
             console.log(token)
             res.status(200).send({ message: "Welcome" + result[0].firstname, status: true, token })
             res.send.body
@@ -151,7 +168,7 @@ const geTdashboard = (req, res) => {
       //  return next(error)
     } else {
       let email = result.email
-      res.status(200).send({ message: "congrate", status: true, email })
+      res.status(200).send({ message: "congrate", status: true, email:email })
       console.log(result)
 
     }
@@ -162,4 +179,4 @@ const geTdashboard = (req, res) => {
 //   console.log(req.boy);
 // };
 
-module.exports = { landingpage, registerUser, signin, geTdashboard, fileupload, uploadchat };
+module.exports = { landingpage, registerUser, registerUsers, signin, geTdashboard, fileupload, uploadchat };

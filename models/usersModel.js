@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
+const { type } = require("express/lib/response");
 
 
 
@@ -9,6 +10,7 @@ const userSchema = new mongoose.Schema({
   email: { type:String, unique:true, required:true },
   password: { type:String, required:true},
   registrationDate : { type: Date,default:Date.now()},
+  profileimage : {type: {}, required: true}
   // registrationTime : {type: Time,default:Time.now()}
 });
 
