@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   email: { type:String, unique:true, required:true },
   password: { type:String, required:true},
   registrationDate : { type: Date,default:Date.now()},
-  profileimage : {type: {}, required: true}
+  // profileimage : {type: {}, required: true}
   // registrationTime : {type: Time,default:Time.now()}
 });
 

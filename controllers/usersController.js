@@ -16,7 +16,7 @@ cloudinary.config({
   api_secret: process.env.API_SECRET
 });
 
-const registerUsers =(req, res)=>{
+const registerUsers = (req, res) => {
   res.render("signup")
 }
 
@@ -84,30 +84,30 @@ const registerUser = async (req, res, next) => {
 //   })
 // }
 
-const fileupload = async(req, res) => {
+const fileupload = async (req, res) => {
   let myfile = req.body.myfile
   const email = req.body
   console.log(myfile);
   try {
-   const result = await cloudinary.uploader.upload(myfile)
-   console.log(result);
-   const myImagelink = result.secure_url
-   if(!result){
-    res.send({ message: "an error occured ", status: false, myImagelink })
-   }
-   return res.send({ message: "image upload sucessful ", status: true, myImagelink })
-   console.log(myImagelink);
+    const result = await cloudinary.uploader.upload(myfile)
+    console.log(result);
+    const myImagelink = result.secure_url
+    if (!result) {
+      res.send({ message: "an error occured ", status: false, myImagelink })
+    }
+    return res.send({ message: "image upload sucessful ", status: true, myImagelink })
+    console.log(myImagelink);
 
-   const profileimage = await usersModel.findOneAndUpdate(
-    {email: email},
-    {$set:{profile: myimage}},
-    {new: true}
-  )
-  if (!profileimage) {
-    res.status(405).send({message:"unable to update profile", status: false})
-  }
+    // const profileimage = await usersModel.findOneAndUpdate(
+    //   { email: email },
+    //   { $set: { profile: myimage } },
+    //   { new: true }
+    // )
+    // if (!profileimage) {
+    //   res.status(405).send({ message: "unable to update profile", status: false })
+    // }
 
-  return res.status(200).send({message:"upload successful", status:true, myimage})
+    // return res.status(200).send({ message: "upload successful", status: true, myimage })
 
     // cloudinary.uploader.upload(myfile, (err, result) => {
     //   if (err) {
@@ -119,7 +119,7 @@ const fileupload = async(req, res) => {
     //       status: true, myImagelink
     //     })
     //   }
-  }catch(error){
+  } catch (error) {
     console.log(error)
   }
   // { public_id: "olympic_flag" },
@@ -168,7 +168,7 @@ const geTdashboard = (req, res) => {
       //  return next(error)
     } else {
       let email = result.email
-      res.status(200).send({ message: "congrate", status: true, email:email })
+      res.status(200).send({ message: "congrate", status: true, email: email })
       console.log(result)
 
     }
